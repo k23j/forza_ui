@@ -1,3 +1,2 @@
 # forza_ui
-
-A new Flutter project.
+A recreation of the Forza Motorsport user interface

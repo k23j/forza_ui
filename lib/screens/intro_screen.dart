@@ -24,7 +24,6 @@ class IntroScreen extends StatelessWidget {
                       child: DebugBorder(child: IntroMenuItens()),
                     ),
                   ),
-                  Align(child: ForzaCircularProgressIndicator()),
                   Positioned(
                     bottom: 0,
                     left: 0,

@@ -1,12 +1,14 @@
+import 'dart:collection';
 import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:forza_ui/models/car.dart';
 
 class BackgroundWidget extends StatefulWidget {
-  const BackgroundWidget({required this.pathList, super.key});
+  const BackgroundWidget({required this.car, super.key});
 
-  final List<String> pathList;
+  final Car car;
 
   @override
   State<BackgroundWidget> createState() => _BackgroundWidgetState();
@@ -25,14 +27,19 @@ class _BackgroundWidgetState extends State<BackgroundWidget> {
 
   ValueKey<int> _animationCounter = ValueKey<int>(0);
 
-  late List<Image> imageList;
+  // late List<Image> imageList;
+
+  late Queue<Image> imageQueue;
 
   @override
   void initState() {
-    imageList =
-        widget.pathList
+    List<Image> imageList =
+        widget.car.bgPathList
             .map((path) => Image.asset(path, fit: BoxFit.cover))
             .toList();
+
+    imageList.shuffle();
+    imageQueue = Queue.from(imageList);
 
     currentOffsetAnimId = getRandomOffsetAnimId();
 
@@ -40,6 +47,7 @@ class _BackgroundWidgetState extends State<BackgroundWidget> {
   }
 
   void setNextImage() {
+    imageQueue.add(imageQueue.removeFirst());
     setState(() {
       currentOffsetAnimId = getRandomOffsetAnimId(currentOffsetAnimId);
       _animationCounter = ValueKey<int>(_animationCounter.value + 1);
@@ -111,10 +119,7 @@ class _BackgroundWidgetState extends State<BackgroundWidget> {
                         child: child,
                       ),
                     ),
-                child: Transform.scale(
-                  scale: 1.2,
-                  child: imageList[_animationCounter.value % imageList.length],
-                ),
+                child: Transform.scale(scale: 1.2, child: imageQueue.first),
               );
             },
           );

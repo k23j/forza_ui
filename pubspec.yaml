@@ -22,6 +22,12 @@ flutter:
 
   assets:
     - assets/forza-motorsport-logo.svg
-    - assets/BG1.png
     - assets/Return-left-02.svg
 
+    - assets/BG/Huracan/bg1.png
+    - assets/BG/Huracan/bg2.png
+    - assets/BG/Huracan/bg3.png
+    - assets/BG/Huracan/bg4.png
+    - assets/BG/Huracan/bg5.png
+    - assets/BG/Huracan/bg6.png
+    - assets/BG/Huracan/bg7.png

@@ -63,10 +63,12 @@ class _IntroMenuButtonState extends State<IntroMenuButton> {
             SizedBox(width: 16),
             Transform.scale(
               alignment: Alignment.centerLeft,
-              scaleX: .8,
+              scaleY: 1.35,
               child: Text(
                 widget.title,
-                style: Theme.of(context).textTheme.bodyLarge,
+                style: Theme.of(
+                  context,
+                ).textTheme.bodyLarge!.copyWith(height: 1.3),
               ),
             ),
           ],

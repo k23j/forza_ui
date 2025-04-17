@@ -21,9 +21,16 @@ flutter:
   uses-material-design: true
 
   assets:
+    # logos
     - assets/forza-motorsport-logo.svg
+
+    # icons
     - assets/Return-left-02.svg
 
+    # images
+    - assets/BG/loading_screen_background.jpg
+
+    # car-huracan
     - assets/BG/Huracan/bg1.png
     - assets/BG/Huracan/bg2.png
     - assets/BG/Huracan/bg3.png

@@ -5,7 +5,9 @@ import 'package:forza_ui/screens/intro_screen/intro_menu_itens.dart';
 import 'package:forza_ui/widgets/forza_circular_progress_indicator.dart';
 
 class IntroScreen extends StatelessWidget {
-  const IntroScreen({super.key});
+  const IntroScreen({required this.isLoaded, super.key});
+
+  final bool isLoaded;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,13 @@ class IntroScreen extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     child: Padding(
                       padding: const EdgeInsets.only(left: 48.0),
-                      child: DebugBorder(child: IntroMenuItens()),
+                      child: DebugBorder(
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width * .16,
+                          height: MediaQuery.of(context).size.width * .2,
+                          child: IntroMenuItens(isLoaded: isLoaded),
+                        ),
+                      ),
                     ),
                   ),
                   Positioned(

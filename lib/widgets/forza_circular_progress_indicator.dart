@@ -20,6 +20,8 @@ class _ForzaCircularProgressIndicatorState
     with TickerProviderStateMixin {
   late final AnimationController _speedModController;
 
+  late Ticker rotationTicker = Ticker(onRotationTick);
+
   final double size = 256;
   final int pointerQnt = 8;
 
@@ -38,23 +40,34 @@ class _ForzaCircularProgressIndicatorState
   final Random _random = Random();
 
   @override
+  void dispose() {
+    _speedModController.removeListener(setCurrentSpeedModAlpha);
+    _speedModController.dispose();
+
+    rotationTicker.stop();
+    rotationTicker.dispose();
+
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
-
-    Ticker rotationTicker = Ticker(onRotationTick);
 
     rotationTicker.start();
 
     _speedModController = AnimationController(
       duration: _speedModDuration,
       vsync: this,
-    )..addListener(() {
-      setState(() {
-        _currentSpeedModAlpha = _calculateSpeedMod(_speedModController.value);
-      });
-    });
+    )..addListener(setCurrentSpeedModAlpha);
 
     scheduleAcceleration(randomIntervalInRange(min: 3000, max: 6000));
+  }
+
+  void setCurrentSpeedModAlpha() {
+    setState(() {
+      _currentSpeedModAlpha = _calculateSpeedMod(_speedModController.value);
+    });
   }
 
   void onRotationTick(Duration elapsed) {
@@ -72,6 +85,8 @@ class _ForzaCircularProgressIndicatorState
   void scheduleAcceleration(Duration interval) async {
     setTargetSpeedMod();
     await Future.delayed(interval);
+
+    if (!mounted) return;
 
     setState(() {
       _speedModController.reset();

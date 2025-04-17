@@ -97,34 +97,29 @@ class _BackgroundWidgetState extends State<BackgroundWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned.fill(
-      child: Builder(
-        builder: (context) {
-          return LayoutBuilder(
-            builder: (context, constraints) {
-              double offsetValue = constraints.maxWidth * .05;
-              return TweenAnimationBuilder(
-                key: _animationCounter,
-                tween: Tween<double>(begin: .0, end: 1.0),
-                duration: duration,
-                onEnd: setNextImage,
-                builder:
-                    (context, value, child) => Opacity(
-                      opacity: calculateOpacity(value),
-                      child: Transform.translate(
-                        offset: getOffset(
-                          offsetValue: offsetValue,
-                          alpha: value,
-                        ),
-                        child: child,
-                      ),
+    return Builder(
+      builder: (context) {
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            double offsetValue = constraints.maxWidth * .05;
+            return TweenAnimationBuilder(
+              key: _animationCounter,
+              tween: Tween<double>(begin: .0, end: 1.0),
+              duration: duration,
+              onEnd: setNextImage,
+              builder:
+                  (context, value, child) => Opacity(
+                    opacity: calculateOpacity(value),
+                    child: Transform.translate(
+                      offset: getOffset(offsetValue: offsetValue, alpha: value),
+                      child: child,
                     ),
-                child: Transform.scale(scale: 1.2, child: imageQueue.first),
-              );
-            },
-          );
-        },
-      ),
+                  ),
+              child: Transform.scale(scale: 1.2, child: imageQueue.first),
+            );
+          },
+        );
+      },
     );
   }
 }
